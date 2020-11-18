@@ -1,0 +1,195 @@
+{% extends "layouts/base.html" %}
+
+{% block sidebar %}
+{% include 'includes/sidebar.html' %}
+{% endblock %}
+
+{% load static %}
+
+{% block title %} Add Data TRIGRS {% endblock %}
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="{% static 'assets/plugins/fontawesome-free/css/all.min.css' %}">
+<!-- Ekko Lightbox -->
+<link rel="stylesheet" href="{% static 'assets/plugins/ekko-lightbox/ekko-lightbox.css' %}">
+<!-- Theme style -->
+<link rel="stylesheet" href="{% static 'assets/css/adminlte.min.css' %}">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<style>
+    .marg {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+</style>
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>Add Data TRIGRS</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="/dashboard/">Dashboard</a></li>
+                <li class="breadcrumb-item active">Add Data TRIGRS</li>
+              </ol>
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+
+    <!-- Main content -->
+    <section class="content">
+        {% for message in messages %}
+        <div class="msg">
+            <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ message }}
+            </div>
+        </div>
+        {% endfor %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-primary">
+                        <form method="POST" enctype = "multipart/form-data">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="contactName">Key-ID</label>
+                                    <input type="text" class="form-control" id="keyID" name="id"
+                                        placeholder="Key-ID">
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactUID">Data Name</label>
+                                    <input type="text" class="form-control" id="dataName" name="name" placeholder="Data Name">
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                            <div id="sub" class="card card-secondary marg">
+                                    <div class="card-body" id="field1">
+                                        <input type="hidden" id="count" name='counter' value=1>
+                                        <div class="form-group">
+                                            <label for="contactName">CH</label>
+                                            <input type="text" class="form-control" id="ch1" name="curah_hujan1"
+                                                placeholder="CH">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputFile">File input</label>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input type="file" id="file1" name="file_input1">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <button type="submit" class="btn btn-danger btn-block" name="moreFiles" id="remove-me"><i class="fas fa-minus"
+                                                    style="margin-right: 10px;"></i>Remove</button>
+                                        </div>
+                                    </div>
+                                    <div id="newRow"></div>
+                                    <!-- /.card-body -->
+                            </div>
+                            <!-- <div id="new" class="card card-secondary marg">
+                            </div> -->
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary btn-block" name="moreFiles" id="addButton"><i class="fas fa-plus"
+                                        style="margin-right: 10px;"></i>More File(s) To Upload</button>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary" name="addData"><i class="fas fa-plus"
+                                        style="margin-right: 10px;"></i>Save Data TRIGRS</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<!-- jQuery -->
+<script src="{% static 'assets/plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap -->
+<script src="{% static 'assets/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- jQuery UI -->
+<script src="{% static 'assets/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+<!-- Ekko Lightbox -->
+<script src="{% static 'assets/plugins/ekko-lightbox/ekko-lightbox.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'assets/js/adminlte.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'assets/js/demo.js' %}"></script>
+<!-- Filterizr-->
+<script src="{% static 'assets/plugins/filterizr/jquery.filterizr.min.js' %}"></script>
+<!-- Page specific script -->
+<script>
+    $(document).ready(function () {
+        // messages timeout for 10 sec 
+        setTimeout(function () {
+            $('.msg').fadeOut('slow');
+        }, 3000); // <-- time in milliseconds, 1000 =  1 sec
+    });
+</script>
+<script>
+$(document).ready(function(){
+    var next = 1;
+    $("#addButton").click(function(e){
+        e.preventDefault();
+        var html = '';
+        next = next + 1;
+        html += '<div class="card-body" id="field">'
+        html +=                '<div class="form-group">'
+        html +=                    '<label for="contactName">CH</label>'
+        html +=                        '<input type="text" class="form-control" id="ch'+ next +'" name="curah_hujan'+ next +'" placeholder="CH">'
+        html +=                '</div>'
+        html +=                '<div class="form-group">'
+        html +=                    '<label for="exampleInputFile">File input</label>'
+        html +=                        '<div class="input-group">'
+        html +=                            '<div class="custom-file">'
+        html +=                                '<input type="file" id="file'+ next +'" name="file_input'+ next +'">'
+        html +=                            '</div>'
+        html +=                        '</div>'
+        html +=                '</div>'
+        html +=                '<div class="card-footer">'
+        html +=                     '<button type="submit" class="btn btn-danger btn-block remove-me" name="moreFiles" id="remove'+ next +'"><i class="fas fa-minus"'
+        html +=                            'style="margin-right: 10px;"></i>Remove</button>'
+        html +=                '</div>'
+        html +=            '</div>'
+
+        $('#newRow').append(html);
+        $("#count").val(next);  
+        
+        $(document).on('click', '.remove-me', function () {
+            $(this).closest('#field').remove();
+        });
+    });
+});
+</script>
+
+{% endblock javascripts %}

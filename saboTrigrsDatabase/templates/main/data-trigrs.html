@@ -1,0 +1,181 @@
+{% extends "layouts/base.html" %}
+
+{% block sidebar %}
+{% include 'includes/sidebar.html' %}
+{% endblock %}
+
+{% load static %}
+
+{% block title %} Data TRIGRS {% endblock %}
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="{% static 'assets/plugins/fontawesome-free/css/all.min.css' %}">
+<!-- Ekko Lightbox -->
+<link rel="stylesheet" href="{% static 'assets/plugins/ekko-lightbox/ekko-lightbox.css' %}">
+<!-- Theme style -->
+<link rel="stylesheet" href="{% static 'assets/css/adminlte.min.css' %}">
+<!-- pace-progress -->
+<link rel="stylesheet" href="{% static 'assets/plugins/pace-progress/themes/black/pace-theme-flat-top.css' %}">
+<!-- DataTables -->
+<link rel="stylesheet" href="{% static 'assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Data TRIGRS</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/dashboard/">Dashboard</a></li>
+            <li class="breadcrumb-item active">Data TRIGRS</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+
+    {% for message in messages %}
+    <div class="msg">
+      <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        {{ message }}
+      </div>
+    </div>
+    {% endfor %}
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <table id="example1" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>No.</th>
+                    <th>Key ID</th>
+                    <th>Data Name</th>
+                    <th>Data Added</th>
+                    <th>Data Updated</th>
+                    <th>CH</th>
+                    <th>Filename</th>
+                    <th>File Status</th>
+                    <th width="8%">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% if data_trigrs %}
+                  {% for data in data_trigrs %}
+                  <tr>
+                    <td rowspan={{data.detail_count}}>{{ forloop.counter }}</td>
+                    <td rowspan={{data.detail_count}}>{{ data.key_id }}</td>
+                    <td rowspan={{data.detail_count}}>{{ data.data_name }}</td>
+                    {% if data.detail %}
+                    {% for data in data.detail %}
+                    <td>{{ data.data_added }}</td>
+                    <td>{{ data.data_updated }}</td>
+                    <td>{{ data.ch }}</td>
+                    <td>{{ data.filename }}</td>
+                    <td>{{ data.file_upload_status }}</td>
+                    <td >
+                      <form method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary" name="edit" value="{{data.id}}"><i
+                            class="fas fa-edit"></i></button>
+                      </form>
+                    </td>
+                  </tr>
+                    {% endfor %}
+                    {% endif %}
+                  {% endfor %}
+                  {% else %}
+                  <td>No Data</td>
+                  <td>No Data</td>
+                  <td>No Data</td>
+                  <td>No Data</td>
+                  <td>No Data</td>
+                  <td>No Data</td>
+                  {% endif %}
+                </tbody>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<!-- jQuery -->
+<script src="{% static 'assets/plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap -->
+<script src="{% static 'assets/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- jQuery UI -->
+<script src="{% static 'assets/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+<!-- Ekko Lightbox -->
+<script src="{% static 'assets/plugins/ekko-lightbox/ekko-lightbox.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'assets/js/adminlte.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'assets/js/demo.js' %}"></script>
+<!-- Filterizr-->
+<script src="{% static 'assets/plugins/filterizr/jquery.filterizr.min.js' %}"></script>
+<!-- pace-progress -->
+<script src="{% static 'assets/plugins/pace-progress/pace.min.js' %}"></script>
+<!-- Page specific script -->
+<script src="{% static 'assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<!-- page script -->
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true,
+      "autoWidth": false,
+    });
+  });
+</script>
+<script>
+  $(document).ready(function () {
+    // messages timeout for 10 sec 
+    setTimeout(function () {
+      $('.msg').fadeOut('slow');
+    }, 3000); // <-- time in milliseconds, 1000 =  1 sec
+  });
+</script>
+
+{% endblock javascripts %}
