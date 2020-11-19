@@ -73,23 +73,25 @@
                         <form method="POST" enctype = "multipart/form-data">
                             {% csrf_token %}
                                     <div class="card-body" id="field1">
+                                        <input type="text" class="form-control" id="contactId" name="id"
+                                    value="{{data_edit.id}}" hidden>
                                         <input type="hidden" id="count" name='counter' value=1>
                                         <div class="form-group">
                                             <label for="contactName">CH</label>
-                                            <input type="text" class="form-control" id="ch1" name="curah_hujan1"
-                                                placeholder="CH" value="{{data_edit.ch}}">
+                                            <input type="text" class="form-control" id="ch" name="curah_hujan"
+                                                placeholder="CH" value="{{data_edit.ch}}" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputFile">File input</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
-                                                    <input type="file" id="file1" name="file_input1">
+                                                    <input type="file" id="file" name="file_input" required>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary" name="addData"><i class="fas fa-edit"
+                                <button type="submit" class="btn btn-primary" name="save"><i class="fas fa-edit"
                                         style="margin-right: 10px;"></i>Edit Data TRIGRS</button>
                             </div>
                         </form>

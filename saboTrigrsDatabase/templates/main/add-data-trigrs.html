@@ -75,12 +75,12 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="contactName">Key-ID</label>
-                                    <input type="text" class="form-control" id="keyID" name="id"
-                                        placeholder="Key-ID">
+                                    <input type="number" class="form-control" id="keyID" name="id"
+                                        placeholder="Key-ID" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="contactUID">Data Name</label>
-                                    <input type="text" class="form-control" id="dataName" name="name" placeholder="Data Name">
+                                    <input type="text" class="form-control" id="dataName" name="name" placeholder="Data Name" required>
                                 </div>
                             </div>
                             <!-- /.card-body -->
@@ -90,13 +90,13 @@
                                         <div class="form-group">
                                             <label for="contactName">CH</label>
                                             <input type="text" class="form-control" id="ch1" name="curah_hujan1"
-                                                placeholder="CH">
+                                                placeholder="CH" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputFile">File input</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
-                                                    <input type="file" id="file1" name="file_input1">
+                                                    <input type="file" id="file1" name="file_input1" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -166,13 +166,13 @@ $(document).ready(function(){
         html += '<div class="card-body" id="field">'
         html +=                '<div class="form-group">'
         html +=                    '<label for="contactName">CH</label>'
-        html +=                        '<input type="text" class="form-control" id="ch'+ next +'" name="curah_hujan'+ next +'" placeholder="CH">'
+        html +=                        '<input type="text" class="form-control" id="ch'+ next +'" name="curah_hujan'+ next +'" placeholder="CH" required>'
         html +=                '</div>'
         html +=                '<div class="form-group">'
         html +=                    '<label for="exampleInputFile">File input</label>'
         html +=                        '<div class="input-group">'
         html +=                            '<div class="custom-file">'
-        html +=                                '<input type="file" id="file'+ next +'" name="file_input'+ next +'">'
+        html +=                                '<input type="file" id="file'+ next +'" name="file_input'+ next +'" required>'
         html +=                            '</div>'
         html +=                        '</div>'
         html +=                '</div>'
@@ -187,6 +187,8 @@ $(document).ready(function(){
         
         $(document).on('click', '.remove-me', function () {
             $(this).closest('#field').remove();
+            next = next - 1;
+            $("#count").val(next);  
         });
     });
 });
