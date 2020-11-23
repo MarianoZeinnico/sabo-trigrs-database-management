@@ -21,6 +21,7 @@ from django.contrib.auth import views as auth_views
 from trigrs.views import login_view, client_index, data_trigrs, add_data_trigrs
 
 urlpatterns = [
+    path('', login_view, name='login-view'),
     url(r'^login/',
         login_view, name='login-view'),
     url(r'^dashboard/',

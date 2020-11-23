@@ -47,7 +47,7 @@ Mac & Unix : source env/bin/activate
 Install package for project requirements
 
 ```bash
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 
 Run django migration for database :
@@ -59,7 +59,7 @@ python manage.py migrate
 Create superadmin :
 
 ```bash
-python manage.py createsuperadmin
+python manage.py createsuperuser
 ```
 
 Run project :
@@ -69,11 +69,4 @@ python manage.py runserver
 ```
 
 In default, the website will be running on port 8000. If port 8000 is using by another app, you can perform runserver above following with the port number that you want.
-
-And now, you can access the app in :
-
-```bash
-{{url}}/login
-```
-
 Use your superuser credentials to access it.
