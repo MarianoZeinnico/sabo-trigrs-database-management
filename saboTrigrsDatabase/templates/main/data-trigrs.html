@@ -98,7 +98,7 @@
                     <td>{{ data.ch }}</td>
                     <td>{{ data.filename }}</td>
                     <td>{{ data.file_upload_status }}</td>
-                    <td >
+                    <td>
                       <form method="POST">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-primary" name="edit" value="{{data.id}}"><i
@@ -106,10 +106,13 @@
                       </form>
                     </td>
                   </tr>
-                    {% endfor %}
-                    {% endif %}
+                  {% endfor %}
+                  {% endif %}
                   {% endfor %}
                   {% else %}
+                  <td>No Data</td>
+                  <td>No Data</td>
+                  <td>No Data</td>
                   <td>No Data</td>
                   <td>No Data</td>
                   <td>No Data</td>
